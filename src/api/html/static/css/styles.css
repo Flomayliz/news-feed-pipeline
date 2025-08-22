@@ -1,0 +1,32 @@
+body, html { height: 100%; }
+/* Top banner */
+#top-banner {
+background: #0d6efd;
+color: white;
+padding: 18px 0;
+text-align: center;
+font-size: 2rem;
+font-weight: 700;
+letter-spacing: 0.5px;
+}
+
+
+/* Layout */
+.app-container { height: calc(100vh - 76px); }
+.sidebar { border-right: 1px solid #e5e7eb; overflow-y: auto; }
+.content { overflow-y: auto; }
+
+
+/* Cards */
+.article-card { border: 1px solid #e5e7eb; border-radius: 12px; padding: 16px; margin-bottom: 16px; }
+.article-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 6px; }
+.meta { font-size: 0.9rem; color: #6b7280; }
+.topics { font-size: 0.9rem; }
+
+
+.form-section-title { font-weight: 700; margin-top: 12px; margin-bottom: 8px; }
+
+
+/* Make central area clearly scrollable */
+.content::-webkit-scrollbar, .sidebar::-webkit-scrollbar { width: 10px; }
+.content::-webkit-scrollbar-thumb, .sidebar::-webkit-scrollbar-thumb { background: #c7d2fe; border-radius: 10px; }

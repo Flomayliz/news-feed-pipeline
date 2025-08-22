@@ -1,0 +1,22 @@
+services:
+  prefect-server:
+    image: prefecthq/prefect:2-python3.11
+    container_name: prefect-server
+    restart: unless-stopped
+    ports:
+      - "4200:4200"
+    environment:
+      - PREFECT_API_URL=http://prefect-server:4200/api
+      - PREFECT_SERVER_API_HOST=0.0.0.0
+      - PREFECT_UI_URL=http://localhost:4200
+    command: ["prefect", "server", "start"]
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:4200/api/health')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    networks:
+      - news-network
+networks:
+  news-network:
