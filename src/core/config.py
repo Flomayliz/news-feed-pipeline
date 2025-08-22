@@ -1,7 +1,6 @@
 """
-    Configuration settings for the application.
+Configuration settings for the application.
 """
-
 
 from pydantic_settings import BaseSettings
 from prefect.blocks.core import Block
@@ -14,6 +13,7 @@ class SystemConfiguration(BaseModel):
     System configuration settings.
     This will use as the base for other configuration classes.
     """
+
     mongo_uri: str = ""
     news_api_key: SecretStr = ""
     mongo_db_name: str = "ai_news_feed"
@@ -21,6 +21,7 @@ class SystemConfiguration(BaseModel):
     min_title_size: int = 15
     score_threshold: int = 2
     get_full_text: bool = False
+
 
 class LocalSettings(SystemConfiguration, BaseSettings):
     """
@@ -31,6 +32,7 @@ class LocalSettings(SystemConfiguration, BaseSettings):
     BaseSettings and Block inherit from Pydantic's BaseModel.
     we just need to implement the required methods for Prefect blocks.
     """
+
     class Config:
         env_file = ".env"
 
@@ -42,6 +44,7 @@ class BlockSettings(SystemConfiguration, Block):
     Block and SystemConfiguration inherits from Pydantic's BaseModel.
     We just need to implement the required methods for Prefect blocks.
     """
+
     pass
 
 
@@ -49,11 +52,11 @@ def get_settings():
     """
     Get the application settings.
 
-    This implementation follows a singleton pattern where 
+    This implementation follows a singleton pattern where
     the settings are loaded once and reused. It warranties that only
     one settings instance is created and used.
     """
-    
+
     if not hasattr(get_settings, "settings"):
         try:
             get_settings.settings = BlockSettings.load("system-settings")
@@ -62,5 +65,5 @@ def get_settings():
             get_settings.settings = LocalSettings()
             block_settings = BlockSettings(**get_settings.settings.model_dump())
             block_settings.save("system-settings", overwrite=True)
-    
+
     return get_settings.settings

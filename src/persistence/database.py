@@ -12,12 +12,12 @@ class DataPersistence(ABC):
     """
     Abstract base class for data persistence layer.
     """
-    
+
     @abstractmethod
     def store_articles(self, articles: List[ArticleEntry]):
         """
         Store a list of articles in the persistence layer.
-        
+
         Args:
             articles (List[ArticleEntry]): The list of articles to store.
         """

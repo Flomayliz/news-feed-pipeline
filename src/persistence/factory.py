@@ -14,9 +14,9 @@ def get_database() -> DataPersistence:
     It follows the factory design pattern although currently it only the MongoDataPersistence is
     implemented.
     [TODO: Implement other DataPersistence implementations]
-    
+
     Returns:
         DataPersistence: The database instance.
     """
-    
+
     return MongoDataPersistence()

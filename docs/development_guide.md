@@ -129,31 +129,32 @@ To implement a new database backend:
 
 ## Code Style and Linting
 
-The project follows these style guidelines and uses [Ruff](https://github.com/charliermarsh/ruff) as an all-in-one Python linter and formatter:
+The project follows strict style guidelines and uses [Ruff](https://github.com/charliermarsh/ruff) as an all-in-one Python linter and formatter. Ruff is already configured in the project's `pyproject.toml` file and included as a development dependency.
 
-- Ruff handles code formatting (similar to Black)
-- Ruff manages import sorting (similar to isort)
-- Ruff performs linting and error checking (similar to flake8, pylint)
-- Ruff helps with code quality and consistency across the project
+### Ruff Features
 
-Add Ruff to your development environment:
+- Code formatting with consistent style rules
+- Import sorting and organization
+- Comprehensive linting and error checking
+- Automated code quality enforcement
+
+### Using Ruff
+
+The project includes pre-configured PDM scripts for code quality:
+
 ```bash
-pdm add -d ruff
-```
+# Install development dependencies including Ruff
+pdm install -G lint
 
-To run Ruff on your code:
-```bash
-# Check code without modifying
-pdm run ruff check .
+# Check code for style issues without modifying
+pdm run lint
 
 # Format code in-place
-pdm run ruff format .
+pdm run format
 
 # Check and fix auto-fixable issues
 pdm run ruff check --fix .
 ```
-
-The project's Ruff configuration can be found in `pyproject.toml` under the `[tool.ruff]` section.
 
 ## Documentation
 

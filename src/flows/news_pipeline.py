@@ -22,9 +22,7 @@ def get_keywords_from_topics() -> List[str]:
 
 
 @task
-def fetch_news_data(
-    fetcher, keywords: List[str], from_date: datetime, to_date: datetime
-) -> dict:
+def fetch_news_data(fetcher, keywords: List[str], from_date: datetime, to_date: datetime) -> dict:
     """Task to fetch raw news data."""
     logger = get_run_logger()
     logger.info(f"Fetching data with keywords: {keywords}")

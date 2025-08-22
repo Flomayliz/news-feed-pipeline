@@ -22,10 +22,11 @@ def connect_to_mongo():
     global _client, _db
 
     settings = get_settings()
-    
+
     # Handle settings if it's a coroutine (for testing purposes)
     if hasattr(settings, "__await__"):
         import asyncio
+
         try:
             settings = asyncio.run(settings)
         except RuntimeError:  # If inside another event loop

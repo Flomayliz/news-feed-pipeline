@@ -19,7 +19,7 @@ dependencies = [
     "pymongo>=4.14.1"
 ]
 
-requires-python = ">=3.10"
+requires-python = ">=3.12"
 readme = "README.md"
 license = {text = "MIT"}
 
@@ -30,12 +30,52 @@ build-backend = "pdm.backend"
 [tool.pdm]
 distribution = false
 
+[tool.pdm.dev-dependencies]
+lint = [
+    "ruff>=0.2.0",
+]
+
 [tool.pdm.scripts]
 start_mongo_server = "docker compose -f docker/mongo_server/docker-compose.yml up -d"
 stop_mongo_server = "docker compose -f docker/mongo_server/docker-compose.yml down"
 start_prefect_server = "prefect server start --background"
 stop_prefect_server = "prefect server stop"
-start_news_pipeline = "python3 src/serve.py &"
+start_news_pipeline = "python3 src/serve.py "
 stop_news_pipeline = "pkill -f 'python3 src/serve.py'"
 start_web_server = "uvicorn src.api.main:app --reload"
 stop_web_server = "pkill -f 'uvicorn src.api.main:app'"
+lint = "ruff check ."
+format = "ruff format ."
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+# Exclude directories
+exclude = [
+    ".git",
+    ".github",
+    ".venv",
+    "__pycache__",
+    ".pytest_cache",
+    "*.egg-info",
+]
+
+[tool.ruff.lint]
+# Enable pycodestyle (E), Pyflakes (F), isort (I), and more
+select = ["E", "F", "I", "N", "W", "B", "C4", "PL", "RUF"]
+
+# Ignore specific rules
+ignore = [
+    "E203",  # Whitespace before ':' - conflicts with black
+    "PLR0913",  # Too many arguments to function call
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["src"]
+force-single-line = true
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"

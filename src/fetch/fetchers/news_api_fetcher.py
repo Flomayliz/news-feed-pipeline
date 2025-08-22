@@ -16,7 +16,7 @@ class NewsApiFetcher(Fetcher):
     News API Fetcher implementation.
 
     This fetcher retrieves articles from newsapi.org.
-    For more information, visit the 
+    For more information, visit the
     [News API documentation](https://newsapi.org/docs/getting-started).
     """
 
@@ -97,16 +97,14 @@ class NewsApiFetcher(Fetcher):
         Returns:
             dict: The JSON response from the API or an error message.
         """
-        
+
         logger = get_run_logger()
         logger.info("Fetching content from News API")
         response = requests.get(url)
         logger.info(f"Received response with status code: {response.status_code}")
         if response.status_code == 200:
             data = response.json()
-            logger.info(
-                f"Successfully fetched {data.get('totalResults', 0)} total results"
-            )
+            logger.info(f"Successfully fetched {data.get('totalResults', 0)} total results")
             return data
         else:
             logger.error(
@@ -129,7 +127,7 @@ class NewsApiFetcher(Fetcher):
         Returns:
             int: The estimated size of the full content.
         """
-        
+
         size = len(content_head.encode("utf-8"))
 
         # News API adds at the end the full size as
@@ -164,9 +162,7 @@ class NewsApiFetcher(Fetcher):
             published_at = None
             if published_at_str:
                 # The 'Z' indicates Zulu time i.e UTC+00:00
-                published_at = datetime.fromisoformat(
-                    published_at_str.replace("Z", "+00:00")
-                )
+                published_at = datetime.fromisoformat(published_at_str.replace("Z", "+00:00"))
 
             article = ArticleEntry(
                 author=item.get("author") or "",
@@ -195,7 +191,7 @@ class NewsApiFetcher(Fetcher):
     ) -> dict:
         """
         Fetch the articles from the News API.
-        
+
         Args:
             keywords (List[str]): A list of keywords to search for.
             from_date (datetime, optional): The start date for the articles.
@@ -204,8 +200,7 @@ class NewsApiFetcher(Fetcher):
         Returns:
             dict: The raw API response data.
         """
-        
-        
+
         logger = get_run_logger()
         logger.info(f"Starting data fetch with {len(keywords)} keywords")
 

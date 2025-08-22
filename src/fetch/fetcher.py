@@ -25,10 +25,9 @@ class Fetcher(ABC):
         from_date: datetime = None,
         to_date: datetime = None,
     ) -> dict:
-
         """
         Fetch data from the source.
-        
+
         Args:
             keywords (List[str], optional): List of keywords to filter articles.
             from_date (datetime, optional): Start date for fetching articles.

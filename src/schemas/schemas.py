@@ -12,6 +12,7 @@ class ArticleEntry(BaseModel):
     Data Transfer Object (DTO) for article data.
     Serves as common interfaces for the pipeline components.
     """
+
     author: str = Field("", description="Author of the article")
     title: str = Field("", description="Title of the article")
     description: str = Field("", description="Description of the article")

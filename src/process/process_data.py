@@ -15,14 +15,14 @@ def _fetch_text_from_url(url: str) -> str:
     """
     Scrap text content from a web page.
     NOTE: This process may be slow and most servers block scraping attempts.
-    
+
     Args:
         url (str): The URL of the web page to scrape.
 
     Returns:
         str: The text content of the web page, or None if an error occurred.
     """
-    
+
     try:
         # Try to avoid simple blocks by adding a user-agent header
         headers = {
@@ -42,7 +42,7 @@ def _score_keywords(keywords, text) -> int:
     """
     Score the presence of keywords in the given text.
     This mechanism uses regular expressions to find whole words only, avoiding partial matches.
-    
+
     Args:
         keywords (list): A list of keywords to search for.
         text (str): The text to search within.
@@ -51,7 +51,7 @@ def _score_keywords(keywords, text) -> int:
         int: The score representing the presence of keywords in the text.
 
     """
-    
+
     if not text or not keywords:
         return 0
     txt = str(text).lower()
@@ -68,7 +68,7 @@ def _raw_articles_to_df(articles: list[ArticleEntry]) -> df:
     """
     Convert a list of raw articles to a pandas DataFrame.
     """
-    
+
     logger = get_run_logger()
     logger.info(f"Converting {len(articles)} raw articles to DataFrame")
     data = [article.model_dump() for article in articles]
@@ -80,7 +80,7 @@ def _remove_incomplete_articles(articles_df: df) -> df:
     """
     Remove articles with missing or incomplete information.
     """
-    
+
     logger = get_run_logger()
     articles_df = articles_df.dropna().reset_index(drop=True)
 
@@ -90,7 +90,7 @@ def _remove_incomplete_articles(articles_df: df) -> df:
     articles_df = articles_df[articles_df["author"].str.strip() != ""]
     articles_df = articles_df[articles_df["description"].str.strip() != ""]
     articles_df = articles_df[articles_df["url"].str.strip() != ""]
-    articles_df = articles_df[articles_df['source'].str.strip() != ""]
+    articles_df = articles_df[articles_df["source"].str.strip() != ""]
 
     logger.info(f"After removing incomplete articles, remaining articles: {len(articles_df)}")
 
@@ -101,7 +101,7 @@ def _filter_articles(articles_df: df) -> df:
     """
     Filter articles based on content size and title length.
     """
-    
+
     logger = get_run_logger()
     settings = get_settings()
 
@@ -112,12 +112,8 @@ def _filter_articles(articles_df: df) -> df:
     logger.info(f"After filtering, remaining articles: {len(articles_df)}")
 
     # Remove all html tags from content, description and title
-    articles_df["content_head"] = articles_df["content_head"].str.replace(
-        r"<.*?>", "", regex=True
-    )
-    articles_df["description"] = articles_df["description"].str.replace(
-        r"<.*?>", "", regex=True
-    )
+    articles_df["content_head"] = articles_df["content_head"].str.replace(r"<.*?>", "", regex=True)
+    articles_df["description"] = articles_df["description"].str.replace(r"<.*?>", "", regex=True)
     articles_df["title"] = articles_df["title"].str.replace(r"<.*?>", "", regex=True)
 
     return articles_df
@@ -127,9 +123,9 @@ def _get_full_text(row):
     """
     Get article text to be evaluated for relevance.
     """
-    
+
     settings = get_settings()
-    
+
     # Only scrap the URLs if it explicit defined
     if not settings.get_full_text:
         text = ""
@@ -152,9 +148,7 @@ def _classify_articles(articles_df: df) -> df:
     logger = get_run_logger()
     # Check if required columns exist
     required_columns = ["url", "title"]
-    missing_columns = [
-        col for col in required_columns if col not in articles_df.columns
-    ]
+    missing_columns = [col for col in required_columns if col not in articles_df.columns]
     if missing_columns:
         raise ValueError(f"Missing required columns for enrichment: {missing_columns}")
 
@@ -200,9 +194,7 @@ def _df_to_article_entries(articles_df: df) -> list[ArticleEntry]:
 
         # Create a dictionary with only the fields that belong to ArticleEntry
         article_data = row.to_dict()
-        filtered_data = {
-            key: article_data[key] for key in article_fields if key in article_data
-        }
+        filtered_data = {key: article_data[key] for key in article_fields if key in article_data}
         filtered_data["topics"] = article_topics
 
         article_entries.append(ArticleEntry(**filtered_data))
@@ -214,7 +206,7 @@ def process_data(raw_articles: list[ArticleEntry]) -> list[ArticleEntry]:
     """
     Run all the filtering and classification steps on the raw articles.
     """
-    
+
     articles_df = _raw_articles_to_df(raw_articles)
     if articles_df.empty:
         return []

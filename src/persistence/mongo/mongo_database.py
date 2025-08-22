@@ -19,7 +19,7 @@ class MongoDataPersistence(DataPersistence):
     """
     MongoDB implementation of the data persistence layer.
     """
-    
+
     def __init__(self):
         """Initialize MongoDB repository without establishing connection."""
         connect_to_mongo()
@@ -44,8 +44,8 @@ class MongoDataPersistence(DataPersistence):
             # Use upsert to ensure uniqueness by URL
             self.collection.update_one(
                 {"url": document["url"]},  # Filter by URL
-                {"$set": document},        # Update/insert the document
-                upsert=True               # Create if doesn't exist
+                {"$set": document},  # Update/insert the document
+                upsert=True,  # Create if doesn't exist
             )
 
     def get_all_articles(self, order_by_date=True, limit=10) -> List[ArticleEntry]:
@@ -96,9 +96,7 @@ class MongoDataPersistence(DataPersistence):
                 [
                     {
                         "$addFields": {
-                            "match_count": {
-                                "$size": {"$setIntersection": ["$topics", topics]}
-                            }
+                            "match_count": {"$size": {"$setIntersection": ["$topics", topics]}}
                         }
                     },
                     {"$sort": {"match_count": DESCENDING, "published_at": DESCENDING}},
