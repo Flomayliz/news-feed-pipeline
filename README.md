@@ -134,7 +134,8 @@ The following steps are for running and testing the application in a local envir
   - Adjust the number of articles displayed
   - Sort by relevance or date
 
-![News Web Interface](docs/images/news_web_interface.gif)
+<img src="docs/images/news_web_interface.gif" alt="News Web Interface" width="800" />
+
 *News web interface showing topic filtering and article display*
 
 #### API Documentation
@@ -151,7 +152,8 @@ The following steps are for running and testing the application in a local envir
   - Manage workflow schedules
   - Track success/failure of each task in the pipeline
 
-![Prefect Dashboard](docs/images/prefect_dashboard.gif)
+<img src="docs/images/prefect_dashboard.gif" alt="Prefect Dashboard" width="800" />
+
 *Prefect dashboard showing pipeline execution with task status*
 
 ---
