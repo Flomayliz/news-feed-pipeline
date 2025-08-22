@@ -1,0 +1,6 @@
+services:
+  worker:
+    build:
+      context: ../../
+      dockerfile: docker/worker/Dockerfile.Worker
+    image: news_pipeline_image:latest

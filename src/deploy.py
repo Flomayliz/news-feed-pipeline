@@ -1,16 +1,15 @@
-from src.flows.news_pipeline import news_pipeline_flow
 from prefect.docker import DockerImage
 from prefect import flow
 
-
 if __name__ == "__main__":
-    news_pipeline_flow.deploy(
+    flow.from_source(
+        "https://github.com/Flomayliz/news-feed-pipeline.git",
+        entrypoint="src/flows/news_pipeline.py:news_pipeline_flow",
+    ).deploy(
         name="news_pipeline_local",
         work_pool_name="news-default-pool",
-        image=DockerImage(
-            name="news_pipeline_image",
-            tag="latest",
-            dockerfile="../docker/worker_image/Dockerfile",
-        ),
+        job_variables={"image_pull_policy": "Never"},
+        image="news_pipeline_image:latest",
+        build=False,
         push=False,
     )
