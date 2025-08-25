@@ -223,27 +223,13 @@ Detailed documentation about the project has been organized into separate files 
 - [**Advanced Configuration**](docs/advanced_configuration.md): Detailed configuration options and customization
 - [**Future Improvements**](docs/future_improvements.md): Roadmap and planned enhancements
 
-## high-level architecture
+## High-Level Architecture
 
 The high-level architecture diagram below shows how the different components interact:
 
-```
-┌───────────────┐     ┌───────────────┐     ┌───────────────┐
-│   News APIs   │────▶│  Prefect Flow  │────▶│   MongoDB    │
-└───────────────┘     └───────────────┘     └───────────────┘
-                             │                      │
-                             │                      │
-                             ▼                      ▼
-                      ┌───────────────┐     ┌───────────────┐
-                      │  FastAPI      │◀────│  Data Access  │
-                      └───────────────┘     └───────────────┘
-                             │
-                             │
-                             ▼
-                      ┌───────────────┐
-                      │  Web Frontend │
-                      └───────────────┘
-```
+<img src="docs/images/architecture_diagram.png" alt="System Architecture Diagram" width="600" />
+
+*System architecture showing the flow from News APIs through Prefect orchestration, MongoDB storage, FastAPI backend, and Web Frontend*
 
 ## Project Structure
 
@@ -280,25 +266,6 @@ The high-level architecture diagram below shows how the different components int
 
 ---
 
-## License
-
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
-
----
-
-## Author
-
-- **Leslie Ricardo de la Rosa**  
-  Email: [leslie_ricardo@hotmail.com](mailto:leslie_ricardo@hotmail.com)
-
----
-
-## Contributing
-
-Contributions are welcome! Please fork the repository and submit a pull request.
-
----
-
 ## Configuration and Customization
 
 The system is highly configurable to meet various needs. Basic configuration is done through the `.env` file as described above.
@@ -331,10 +298,8 @@ This project welcomes contributions from developers. To get started with develop
 
 The development guide includes code examples and best practices for extending the project functionality.
 
-## Acknowledgments
+---
 
-- [NewsAPI](https://newsapi.org/) for providing news data.
-- [Prefect](https://www.prefect.io/) for workflow orchestration.
-- [FastAPI](https://fastapi.tiangolo.com/) for the API framework.
+## License
 
-
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

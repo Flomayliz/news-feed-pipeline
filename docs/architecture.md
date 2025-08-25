@@ -2,23 +2,10 @@
 
 Below is a high-level architecture diagram showing how the different components of the system interact:
 
-```
-┌───────────────┐     ┌───────────────┐     ┌───────────────┐
-│   News APIs   │────▶│  Prefect Flow  │────▶│   MongoDB    │
-└───────────────┘     └───────────────┘     └───────────────┘
-                             │                      │
-                             │                      │
-                             ▼                      ▼
-                      ┌───────────────┐     ┌───────────────┐
-                      │  FastAPI      │◀────│  Data Access  │
-                      └───────────────┘     └───────────────┘
-                             │
-                             │
-                             ▼
-                      ┌───────────────┐
-                      │  Web Frontend │
-                      └───────────────┘
-```
+<img src="images/architecture_diagram.png" alt="System Architecture Diagram" width="600" />
+
+*System architecture showing the flow from News APIs through Prefect orchestration, MongoDB storage, FastAPI backend, and Web Frontend*
+
 ## Data Flow
 
 1. The NewsAPI fetcher retrieves raw article data from external news sources
